@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Purchase } from "src/purchase/entities/purchase.entity";
+import { User } from "src/user/entities/user.entity";
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({
-  name: 'supplier'
-})
+@Entity('supplier')
 export class Supplier {
 
   @PrimaryGeneratedColumn('uuid')
@@ -18,7 +18,24 @@ export class Supplier {
   })
   debt: number;
 
-  //TODO: Add a relationship with the user entity
-  user_id: string;
+  @ManyToOne(
+    () => User,
+    (user) => user.supplier,
+    {
+      onDelete: 'CASCADE'
+    }
+  )
+  user: User;
+
+  @OneToOne(
+    () => Purchase,
+    (purchase) => purchase.supplier_id,
+    {
+      cascade: true,
+      eager: true
+    }
+  )
+  sale: Purchase;
+
 
 }

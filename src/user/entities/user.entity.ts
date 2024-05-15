@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Purchase } from 'src/purchase/entities/purchase.entity';
+import { Sale } from 'src/sale/entities/sale.entity';
+import { Supplier } from 'src/supplier/entities/supplier.entity';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({
-  name: 'user',
-})
+@Entity('user')
 export class User {
 
   @PrimaryGeneratedColumn('uuid')
@@ -20,5 +21,36 @@ export class User {
     select: false,
   })
   password: string;
+
+  @OneToMany(
+    () => Supplier,
+    (supplier) => supplier.user,
+    {
+      cascade: true,
+      eager: true
+    }
+  )
+  supplier: Supplier;
+
+  @OneToMany(
+    () => Purchase,
+    (purchase) => purchase.user,
+    {
+      cascade: true,
+      eager: true
+    }
+  )
+  purchase: Purchase;
+
+  @OneToMany(
+    () => Sale,
+    (sale) => sale.user,
+    {
+      cascade: true,
+      eager: true
+    }
+  )
+  sale: Sale;
+
 
 }

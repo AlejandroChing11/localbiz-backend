@@ -17,4 +17,5 @@ export class Category {
 
   //TODO: Add a relationship with the product entity
 
+
 }
