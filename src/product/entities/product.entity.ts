@@ -14,7 +14,9 @@ export class Product {
   })
   product_name: string;
 
-  @Column('float')
+  @Column('float', {
+    nullable: true
+  })
   purchase_price: number;
 
   @Column('float')
