@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from "src/product/entities/product.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
   name: 'category'
@@ -15,7 +16,14 @@ export class Category {
   @Column('text')
   description: string;
 
-  //TODO: Add a relationship with the product entity
+  @OneToMany(
+    () => Product,
+    (product) => product.category,
+    {
+      eager: true
+    }
+  )
+  products: Product[];
 
 
 }

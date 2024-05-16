@@ -10,9 +10,6 @@ export class Sale {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  //TODO: Add a relationship with the product entity
-  product_id: string;
-
   @Column('float', {
     nullable: false
   })

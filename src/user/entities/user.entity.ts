@@ -40,7 +40,7 @@ export class User {
       eager: true
     }
   )
-  purchase: Purchase;
+  purchase: Purchase[];
 
   @OneToMany(
     () => Sale,
@@ -50,7 +50,7 @@ export class User {
       eager: true
     }
   )
-  sale: Sale;
+  sale: Sale[];
 
 
 }

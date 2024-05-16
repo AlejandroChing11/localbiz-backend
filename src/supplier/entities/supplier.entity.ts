@@ -1,6 +1,6 @@
 import { Purchase } from "src/purchase/entities/purchase.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('supplier')
 export class Supplier {
@@ -14,7 +14,7 @@ export class Supplier {
   supplier_name: string;
 
   @Column('float', {
-    nullable: false
+    nullable: true
   })
   debt: number;
 
@@ -27,12 +27,11 @@ export class Supplier {
   )
   user: User;
 
-  @OneToOne(
+  @OneToMany(
     () => Purchase,
-    (purchase) => purchase.supplier_id,
+    (purchase) => purchase.supplier,
     {
-      cascade: true,
-      eager: true
+      onDelete: 'CASCADE'
     }
   )
   sale: Purchase;
