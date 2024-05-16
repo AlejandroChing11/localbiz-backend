@@ -18,16 +18,6 @@ export class Product {
   price: number;
 
   @ManyToOne(
-    () => Sale,
-    (sale) => sale.products,
-    {
-      onDelete: 'CASCADE',
-      nullable: true
-    }
-  )
-  sale?: Sale;
-
-  @ManyToOne(
     () => Category,
     (category) => category.id,
     {
@@ -35,6 +25,15 @@ export class Product {
     }
   )
   category: Category;
+
+  @ManyToOne(
+    () => Sale,
+    (sale) => sale.products,
+    {
+      onDelete: 'CASCADE',
+    }
+  )
+  sale: Sale;
 
 
 

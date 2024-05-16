@@ -29,9 +29,15 @@ export class Sale {
   )
   user: User;
 
+  @Column('date', {
+    nullable: false
+  })
+  CreatedAt: Date;
+
   @OneToMany(
     () => Product,
-    (product) => product.sale,
+    (product) => product.id
+    ,
     {
       cascade: true,
       eager: true

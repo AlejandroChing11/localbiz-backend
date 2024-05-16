@@ -13,7 +13,9 @@ export class Category {
   })
   category_name: string;
 
-  @Column('text')
+  @Column('text', {
+    nullable: true
+  })
   description: string;
 
   @OneToMany(
