@@ -15,11 +15,14 @@ export class Product {
   product_name: string;
 
   @Column('float')
+  purchase_price: number;
+
+  @Column('float')
   price: number;
 
   @ManyToOne(
     () => Category,
-    (category) => category.id,
+    (category) => category.products,
     {
       onDelete: 'CASCADE',
     }

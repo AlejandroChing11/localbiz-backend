@@ -34,6 +34,10 @@ export class CategoryService {
 
   }
 
+  async findOneByName(name: string): Promise<Category> {
+    return await this.categoryRepository.findOneBy({ category_name: name })
+  }
+
   async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
 
     const category = await this.categoryRepository.preload({
