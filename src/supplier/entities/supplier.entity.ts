@@ -1,6 +1,6 @@
 import { Purchase } from "src/purchase/entities/purchase.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('supplier')
 export class Supplier {
@@ -14,6 +14,7 @@ export class Supplier {
   supplier_name: string;
 
   @Column('float', {
+    default: 0,
     nullable: true
   })
   debt: number;
@@ -31,7 +32,7 @@ export class Supplier {
     () => Purchase,
     (purchase) => purchase.supplier,
     {
-      onDelete: 'CASCADE'
+      onDelete: 'CASCADE',
     }
   )
   sale: Purchase;
