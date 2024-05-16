@@ -16,7 +16,7 @@ export class Purchase {
 
   @ManyToOne(
     () => User,
-    (user) => user.purchase,
+    (user) => user.purchases,
     {
       onDelete: 'CASCADE',
     }

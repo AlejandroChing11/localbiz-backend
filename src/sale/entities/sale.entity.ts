@@ -22,7 +22,7 @@ export class Sale {
 
   @ManyToOne(
     () => User,
-    (user) => user.sale,
+    (user) => user.sales,
     {
       onDelete: 'CASCADE',
     }

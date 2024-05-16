@@ -17,6 +17,12 @@ export class User {
   })
   email: string;
 
+  @Column('text', { nullable: true })
+  address: string;
+
+  @Column('real', { nullable: true })
+  capital: number;
+
   @Column('text', {
     select: false,
   })
@@ -30,7 +36,7 @@ export class User {
       eager: true
     }
   )
-  supplier: Supplier;
+  suppliers: Supplier;
 
   @OneToMany(
     () => Purchase,
@@ -40,7 +46,7 @@ export class User {
       eager: true
     }
   )
-  purchase: Purchase[];
+  purchases: Purchase[];
 
   @OneToMany(
     () => Sale,
@@ -50,7 +56,7 @@ export class User {
       eager: true
     }
   )
-  sale: Sale[];
+  sales: Sale[];
 
 
 }

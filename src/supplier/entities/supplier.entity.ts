@@ -20,7 +20,7 @@ export class Supplier {
 
   @ManyToOne(
     () => User,
-    (user) => user.supplier,
+    (user) => user.suppliers,
     {
       onDelete: 'CASCADE'
     }
