@@ -23,7 +23,7 @@ export class ProductController {
     return this.productService.findOneById(id);
   }
 
-  @Get(':product_name')
+  @Get('name/:product_name')
   findOneByName(@Param('product_name') product_name: string): Promise<Product> {
     return this.productService.findOneByName(product_name);
   }

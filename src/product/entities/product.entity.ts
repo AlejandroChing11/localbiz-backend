@@ -39,8 +39,13 @@ export class Product {
   })
   purchase: Purchase;
 
-  @ManyToOne(() => Sale, sale => sale.products, {
-    onDelete: 'CASCADE',
-  })
+  @ManyToOne(
+    () => Sale,
+    sale => sale.products,
+    {
+      onDelete: 'CASCADE',
+    }
+  )
   sale: Sale;
+
 }

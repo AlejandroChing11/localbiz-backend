@@ -5,7 +5,7 @@ import { UpdateSaleDto } from './dto/update-sale.dto';
 
 @Controller('sale')
 export class SaleController {
-  constructor(private readonly saleService: SaleService) {}
+  constructor(private readonly saleService: SaleService) { }
 
   @Post()
   create(@Body() createSaleDto: CreateSaleDto) {
@@ -18,13 +18,8 @@ export class SaleController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.saleService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSaleDto: UpdateSaleDto) {
-    return this.saleService.update(+id, updateSaleDto);
+  findOne(@Param('date') date: Date) {
+    return this.saleService.findOneByDate(date);
   }
 
   @Delete(':id')

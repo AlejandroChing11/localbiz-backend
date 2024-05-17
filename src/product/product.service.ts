@@ -72,8 +72,38 @@ export class ProductService {
 
   }
 
+  async updateQuantity(productName: string, quantity: number): Promise<Product> {
+    const product = await this.findOneByName(productName);
+
+    if (!product) {
+      throw new NotFoundException(`Product ${productName} not found`);
+    }
+
+    if (product.quantity <= 0) {
+      this.productRepository.delete(product.id);
+      throw new NotFoundException(`Product ${productName} is out of stock`);
+    }
+
+    if (product.quantity < quantity) {
+      throw new NotFoundException(`Product ${productName} has only ${product.quantity} items in stock`);
+    }
+
+    product.quantity -= quantity;
+
+    const productUpdated = this.productRepository.save(product);
+    return productUpdated;
+  }
+
   remove(id: string): Promise<string> {
     this.productRepository.delete(id);
     return Promise.resolve(`Product #${id} has been deleted`);
   }
+
+  private async deleteOutOfStockProducts() {
+    const products = await this.productRepository.find({ where: { quantity: 0 } });
+    products.forEach(async product => {
+      await this.productRepository.delete(product.id);
+    });
+  }
+
 }

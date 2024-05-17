@@ -1,6 +1,6 @@
 import { Product } from "src/product/entities/product.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
   name: 'sale'
@@ -25,14 +25,18 @@ export class Sale {
   })
   user: User;
 
-  @Column('date', {
+  @CreateDateColumn()
+  date: Date;
+
+  @Column('varchar', {
     nullable: false
   })
-  CreatedAt: Date;
+  client_name: string;
 
-  @OneToMany(() => Product, product => product.sale, {
-    cascade: true,
-    eager: true,
-  })
+  @OneToMany(
+    () => Product,
+    (product) => product.sale,
+    { cascade: true, eager: true }
+  )
   products: Product[];
 }
