@@ -1,4 +1,13 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString, Max, MaxLength, Min, MinLength } from "class-validator";
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+  MinLength
+} from "class-validator";
 
 export class CreateProductDto {
 
@@ -15,8 +24,13 @@ export class CreateProductDto {
 
   @IsNumber()
   @IsPositive()
-  @Min(1000)
   price: number;
+
+  @IsNumber()
+  @IsPositive()
+  @Min(1)
+  @Max(100)
+  quantity: number;
 
   @IsString()
   @IsNotEmpty()

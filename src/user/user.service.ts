@@ -45,7 +45,7 @@ export class UserService {
     }
 
     const user = await this.userRepository.findOneBy({ id });
-
+    delete user.password;
     return user;
 
   }
@@ -78,4 +78,13 @@ export class UserService {
     }
     return `The User with id: ${id} has been deleted successfully`;
   }
+
+  async findOneById(id: string) {
+    const user = await this.userRepository.findOneBy({ id });
+    if (!user) {
+      throw new NotFoundException(`User with ${id} not found`)
+    }
+    return user;
+  }
+
 }

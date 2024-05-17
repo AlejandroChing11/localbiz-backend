@@ -91,5 +91,9 @@ export class SupplierService {
 
   }
 
+  async findOneByName(supplierName: string): Promise<Supplier> {
+    return this.supplierRepository.findOneBy({ supplier_name: supplierName });
+  }
+
 
 }

@@ -19,23 +19,13 @@ export class Supplier {
   })
   debt: number;
 
-  @ManyToOne(
-    () => User,
-    (user) => user.suppliers,
-    {
-      onDelete: 'CASCADE'
-    }
-  )
+  @ManyToOne(() => User, user => user.suppliers, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
-  @OneToMany(
-    () => Purchase,
-    (purchase) => purchase.supplier,
-    {
-      onDelete: 'CASCADE',
-    }
-  )
-  sale: Purchase;
-
-
+  @OneToMany(() => Purchase, purchase => purchase.supplier, {
+    onDelete: 'CASCADE',
+  })
+  purchases: Purchase[];
 }

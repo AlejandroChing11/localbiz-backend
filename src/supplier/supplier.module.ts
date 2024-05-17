@@ -11,6 +11,7 @@ import { UserModule } from 'src/user/user.module';
   imports: [
     TypeOrmModule.forFeature([Supplier]),
     UserModule
-  ]
+  ],
+  exports: [SupplierService]
 })
 export class SupplierModule { }

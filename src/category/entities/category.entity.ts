@@ -18,14 +18,8 @@ export class Category {
   })
   description: string;
 
-  @OneToMany(
-    () => Product,
-    (product) => product.category,
-    {
-      eager: true
-    }
-  )
+  @OneToMany(() => Product, product => product.category, {
+    eager: true,
+  })
   products: Product[];
-
-
 }

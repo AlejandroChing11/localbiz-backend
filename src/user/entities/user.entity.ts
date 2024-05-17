@@ -28,35 +28,19 @@ export class User {
   })
   password: string;
 
-  @OneToMany(
-    () => Supplier,
-    (supplier) => supplier.user,
-    {
-      cascade: true,
-      eager: true
-    }
-  )
-  suppliers: Supplier;
+  @OneToMany(() => Supplier, supplier => supplier.user, {
+    cascade: true,
+    eager: true,
+  })
+  suppliers: Supplier[];
 
-  @OneToMany(
-    () => Purchase,
-    (purchase) => purchase.user,
-    {
-      cascade: true,
-      eager: true
-    }
-  )
+  @OneToMany(() => Purchase, purchase => purchase.user, {
+    eager: true,
+  })
   purchases: Purchase[];
 
-  @OneToMany(
-    () => Sale,
-    (sale) => sale.user,
-    {
-      cascade: true,
-      eager: true
-    }
-  )
+  @OneToMany(() => Sale, sale => sale.user, {
+    eager: true,
+  })
   sales: Sale[];
-
-
 }

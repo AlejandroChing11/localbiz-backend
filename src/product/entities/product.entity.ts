@@ -1,4 +1,5 @@
 import { Category } from "src/category/entities/category.entity";
+import { Purchase } from "src/purchase/entities/purchase.entity";
 import { Sale } from "src/sale/entities/sale.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -22,24 +23,21 @@ export class Product {
   @Column('float')
   price: number;
 
-  @ManyToOne(
-    () => Category,
-    (category) => category.products,
-    {
-      onDelete: 'CASCADE',
-    }
-  )
+  @Column('integer')
+  quantity: number;
+
+  @ManyToOne(() => Category, category => category.products, {
+    onDelete: 'CASCADE',
+  })
   category: Category;
 
-  @ManyToOne(
-    () => Sale,
-    (sale) => sale.products,
-    {
-      onDelete: 'CASCADE',
-    }
-  )
+  @ManyToOne(() => Purchase, purchase => purchase.products, {
+    onDelete: 'CASCADE',
+  })
+  purchase: Purchase;
+
+  @ManyToOne(() => Sale, sale => sale.products, {
+    onDelete: 'CASCADE',
+  })
   sale: Sale;
-
-
-
 }

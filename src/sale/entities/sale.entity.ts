@@ -20,13 +20,9 @@ export class Sale {
   })
   tax: number;
 
-  @ManyToOne(
-    () => User,
-    (user) => user.sales,
-    {
-      onDelete: 'CASCADE',
-    }
-  )
+  @ManyToOne(() => User, user => user.sales, {
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @Column('date', {
@@ -34,15 +30,9 @@ export class Sale {
   })
   CreatedAt: Date;
 
-  @OneToMany(
-    () => Product,
-    (product) => product.id
-    ,
-    {
-      cascade: true,
-      eager: true
-    }
-  )
+  @OneToMany(() => Product, product => product.sale, {
+    cascade: true,
+    eager: true,
+  })
   products: Product[];
-
 }
