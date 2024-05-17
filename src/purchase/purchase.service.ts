@@ -53,6 +53,12 @@ export class PurchaseService {
       if (!category) {
         throw new NotFoundException('Category not found');
       }
+
+      const existingProduct = await this.productRepository.findOne({ where: { product_name: productDto.product_name } });
+      if (existingProduct) {
+        throw new NotFoundException('Product already exists');
+      }
+
       const product = this.productRepository.create({
         ...productDto,
         purchase: savedPurchase,
