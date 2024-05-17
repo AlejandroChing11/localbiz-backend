@@ -23,7 +23,10 @@ export class Product {
   @Column('float')
   price: number;
 
-  @Column('integer')
+  @Column('integer', {
+    default: 0,
+    nullable: true
+  })
   quantity: number;
 
   @ManyToOne(() => Category, category => category.products, {
