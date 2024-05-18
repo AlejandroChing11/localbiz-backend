@@ -1,6 +1,6 @@
 import { Product } from "src/product/entities/product.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
   name: 'sale'
@@ -33,10 +33,18 @@ export class Sale {
   })
   client_name: string;
 
-  @OneToMany(
-    () => Product,
-    (product) => product.sale,
-    { cascade: true, eager: true }
-  )
+
+  @ManyToMany(() => Product, (product) => product.sales)
+  @JoinTable({
+    name: 'sale_product',
+    joinColumn: {
+      name: 'sale_id',
+    },
+    inverseJoinColumn: {
+      name: 'product_id',
+    }
+  })
   products: Product[];
+
+
 }

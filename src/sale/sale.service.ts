@@ -20,7 +20,7 @@ export class SaleService {
     private readonly productRepository: Repository<Product>,
   ) { }
 
-  async create(createSaleDto: CreateSaleDto) {
+  async create(createSaleDto: CreateSaleDto): Promise<Sale> {
 
     const { userId, products } = createSaleDto;
 
@@ -35,59 +35,57 @@ export class SaleService {
     for (const productDto of products) {
       const product = await this.productService.findOneByName(productDto.product_name);
       if (!product) {
-        throw new NotFoundException('Product not found');
+        throw new NotFoundException(`Product ${productDto.product_name} not found`);
       }
 
       if (product.quantity < productDto.quantity) {
-        this.productRepository.delete(product.id);
-        throw new NotFoundException(`Product ${productDto.product_name} has only ${product.quantity} items in stock`);
+        throw new NotFoundException(`Not enough quantity available for product ${productDto.product_name}`);
       }
 
       total += product.price * productDto.quantity;
-
     }
 
     total += total * (createSaleDto.tax / 100);
 
     const newSale = this.saleRepository.create({
-      user,
       total,
       tax: createSaleDto.tax,
       client_name: createSaleDto.clientName,
-    });
+      user
+    })
 
     const savedSale = await this.saleRepository.save(newSale);
 
     for (const productDto of products) {
-
       const product = await this.productService.findOneByName(productDto.product_name);
-
       if (!product) {
-        throw new NotFoundException('Product not found');
+        throw new NotFoundException(`Product ${productDto.product_name} not found`);
       }
 
-      product.quantity -= productDto.quantity;
-
-      await this.productRepository.save(product);
-
-      await this.productRepository.createQueryBuilder()
+      await this.saleRepository.createQueryBuilder()
         .relation(Sale, 'products')
         .of(savedSale)
         .add(product);
 
     }
+
+    await this.saleRepository.save(savedSale);
+
+    for (const productDto of products) {
+      const product = await this.productService.findOneByName(productDto.product_name);
+      product.quantity -= productDto.quantity;
+      await this.productRepository.save(product);
+    }
     return savedSale;
   }
 
   findAll(): Promise<Sale[]> {
-    return this.saleRepository.find();
+    return this.saleRepository.find({
+      relations: ['products']
+    });
   }
 
   async findOneByDate(date: Date) {
     return await this.saleRepository.find({ where: { date } });
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} sale`;
   }
 }

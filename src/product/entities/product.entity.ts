@@ -1,7 +1,7 @@
 import { Category } from "src/category/entities/category.entity";
 import { Purchase } from "src/purchase/entities/purchase.entity";
 import { Sale } from "src/sale/entities/sale.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({
   name: 'product'
@@ -35,17 +35,11 @@ export class Product {
   category: Category;
 
   @ManyToOne(() => Purchase, purchase => purchase.products, {
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
   })
   purchase: Purchase;
 
-  @ManyToOne(
-    () => Sale,
-    sale => sale.products,
-    {
-      onDelete: 'CASCADE',
-    }
-  )
-  sale: Sale;
+  @ManyToMany(() => Sale, (sale) => sale.products)
+  sales: Sale[];
 
 }

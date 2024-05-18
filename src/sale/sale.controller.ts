@@ -21,9 +21,4 @@ export class SaleController {
   findOne(@Param('date') date: Date) {
     return this.saleService.findOneByDate(date);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.saleService.remove(+id);
-  }
 }
